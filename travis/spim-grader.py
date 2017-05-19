@@ -80,9 +80,9 @@ def generate_filename(submission, sample):
         ID = team[team.rfind("/")+1:]
     except:
         ID = submission
-    print ID + '_' + sample
     return ID + '_' + sample
 
+# Heads the results file with a line saying whether the tests for that file passed
 def update_results(output_file, passed):
     path = "./diagnostics/{}".format(output_file)
     f = open(path, "r")
@@ -93,6 +93,8 @@ def update_results(output_file, passed):
     f.write(results)
     f.close()
 
+# Takes an input file that consists of a number of lines of input
+# and feeds them into spim subprocesses.
 def input_lines(test, subm, resl, diag):
     # ASSUMPTION: THE FILE THAT WILL BE USED TO GRADE SOME SUBMISSION
     #             WILL SHARE NAMES WITH THE SUBMISSION FILE.
@@ -114,6 +116,7 @@ def input_lines(test, subm, resl, diag):
         passed = compare(output_file, cases_f)
         update_results(output_file, passed)
 
+# Returns True if all tests for all files have passed; else False
 def passed_all():
     path = "./travis/diagnostics/"
     files = os.listdir(path)
@@ -129,6 +132,7 @@ def passed_all():
     return True
     
 # Austen intends to grade labs with a binary blob file
+# TODO: Get that working.
 def input_blob(test, subm, resl, diag):
     pass
 
