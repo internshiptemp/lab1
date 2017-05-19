@@ -9,20 +9,27 @@ Writes to 'results' folder.
 Source: https://github.com/stensonowen/spim-grader
 Licence: GPL 2.0
 '''
-import os, time, re
+import os, time, re, sys
 from subprocess import Popen, PIPE, STDOUT
 
 def run(fn, sample_input='\n'):
-    #start process and write input
     proc = Popen(["spim", "-file", "../submission/"+fn], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    if sample_input[-1:] != '\n':
-        print "Warning: last line (of file below) must end with newline char to be submitted. Assuming it should..."
-        sample_input = sample_input + '\n'
     proc.stdin.write(sample_input)
     return proc 
 
+def remove_header(output):
+    #remove output header
+    hdrs = []
+    hdrs.append(re.compile("SPIM Version .* of .*\n"))
+    hdrs.append(re.compile("Copyright .*, James R. Larus.\n"))
+    hdrs.append(re.compile("All Rights Reserved.\n"))
+    hdrs.append(re.compile("See the file README for a full copyright notice.\n"))
+    hdrs.append(re.compile("Loaded: .*/spim/.*\n"))
+    for hdr in hdrs:
+        output = re.sub(hdr, "", output)
+    return output
+
 def grade(p, f):
-    #arg = process running homework file, file to write results to
     f = open("results/" + f, 'w')
     for proc in p:
         time.sleep(.1)
@@ -33,16 +40,7 @@ def grade(p, f):
                 proc.kill()
                 f.write("Process hung; no results to report\n")
                 continue
-        output = proc.stdout.read()
-        #remove output header
-        hdrs = []
-        hdrs.append(re.compile("SPIM Version .* of .*\n"))
-        hdrs.append(re.compile("Copyright .*, James R. Larus.\n"))
-        hdrs.append(re.compile("All Rights Reserved.\n"))
-        hdrs.append(re.compile("See the file README for a full copyright notice.\n"))
-        hdrs.append(re.compile("Loaded: .*/spim/.*\n"))
-        for hdr in hdrs:
-            output = re.sub(hdr, "", output)
+        output = remove_header(proc.stdout.read())
         errors = proc.stderr.read()
         if errors == "":
             f.write(output + '\n')
@@ -84,7 +82,52 @@ def generate_filename(submission, sample):
         ID = submission
     return ID + '_' + sample
 
-def main():
+def update_results(output_file, passed):
+    path = "./diagnostics/{}".format(output_file)
+    f = open(path, "r")
+    results = f.read()
+    f.close()
+    f = open(path, "w")
+    f.write("{}{}".format(passed.__str__(), "\n"))
+    f.write(results)
+    f.close()
+
+def input_lines(test, subm, resl, diag):
+    # ASSUMPTION: THE FILE THAT WILL BE USED TO GRADE SOME SUBMISSION
+    #             WILL SHARE NAMES WITH THE SUBMISSION FILE.
+    for submission in os.listdir(subm):
+        #cycle through samples to test:
+        output_file = ""
+        cases_f = submission[:submission.rfind(".")]
+        cases = open("{}/{}".format(test, cases_f), 'r')
+        results = []
+        for line in cases.readlines():
+            sample_input = "{}{}".format(line.strip(), "\n")
+            #create process
+            p = run(submission, sample_input)
+            results.append(p)
+        cases.close()
+
+        output_file = generate_filename(submission, cases_f)
+        grade(results, output_file)
+        passed = compare(output_file, cases_f)
+        update_results(output_file, passed)
+
+def passed_all():
+    path = "./diagnostics/"
+    files = os.listdir(path)
+    for f in files:
+        f = open(f, "r")
+        passed = bool(f.readlines[0])
+        if not passed:
+            return False
+    return True
+    
+# Austen intends to grade labs with a binary blob file
+def input_blob(test, subm, resl, diag):
+    pass
+
+def main(input_type="line"):
     os.chdir("./travis/")
     #no use in running if content directories aren't present
     test = "test_cases"
@@ -93,30 +136,24 @@ def main():
     diag = "diagnostics"
     assert os.path.isdir(test)
     assert os.path.isdir(subm)
-    if os.path.isdir(resl) is False:
-        assert os.path.isfile(resl) == False
-        os.makedirs(resl)
-    # cycle through files to grade:
-    # TODO: IF STUDENTS WILL ONLY SUBMIT 1 FILE PER LAB, THEN NO NEED TO CYCLE
-    for submission in os.listdir(subm):
-        #cycle through samples to test:
-        output_file = ""
-        for f in os.listdir(test):
-            cases = open("{}/{}".format(test, f), 'r')
-            #read sample input; fix windows EOL char
-            results = []
-            for line in cases.readlines():
-                sample_input = line
-                sample_input = sample_input.replace('\r', '')
-                #create process
-                p = run(submission, sample_input)
-                results.append(p)
-            output_file = generate_filename(submission, f)
-            grade(results, output_file)
-            passed = compare(output_file, f)
-            if not passed:
-                exit(1)
+    assert os.path.isdir(resl)
+    assert os.path.isdir(diag)
+    if input_type == "line":
+        input_lines(test, subm, resl, diag)
+    else:
+        input_blob(test, subm, resl, diag)
 
+       
 if __name__ == "__main__":
-    main()
+    args = sys.argv
+    if len(args) == 1:
+        main()
+
+    if "-t" in args:
+        t = args[args.index("-t")+1]
+        main(t)
+
+    if "-g" in args:
+        if not passed_all():
+            exit(1)
 
