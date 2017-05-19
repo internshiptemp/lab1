@@ -85,6 +85,7 @@ def generate_filename(submission, sample):
     return ID + '_' + sample
 
 def main():
+    os.chdir("./travis/")
     #no use in running if content directories aren't present
     test = "test_cases"
     subm = "../submission"

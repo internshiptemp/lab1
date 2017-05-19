@@ -28,6 +28,6 @@ Test Case 9: PASSED
 Test Case 10: PASSED
 	Expected: 167772160
 	Received: 167772160
-Test Case 11: FAILED
+Test Case 11: PASSED
 	Expected: -1
-	Received: 268435455
+	Received: -1
