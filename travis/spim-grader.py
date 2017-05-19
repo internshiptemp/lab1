@@ -80,6 +80,7 @@ def generate_filename(submission, sample):
         ID = team[team.rfind("/")+1:]
     except:
         ID = submission
+    print ID + '_' + sample
     return ID + '_' + sample
 
 def update_results(output_file, passed):
@@ -117,7 +118,6 @@ def passed_all():
     path = "./travis/diagnostics/"
     files = os.listdir(path)
     files.remove(".empty")
-    print files
 
     for f in files:
         f = open("{}{}".format(path, f), "r")
