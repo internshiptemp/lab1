@@ -34,7 +34,7 @@ main:
 	li	$v0, 5				# syscall readint
 	syscall					# $v0 <- 0xWWXXYYZZ
 
-	andi $t0, $v0, 0x00		# $t0 <- 0x000000ZZ
+	andi $t0, $v0, 0xFF		# $t0 <- 0x000000ZZ
 	sll  $t0, $t0, 0x18		# $t0 <- 0xZZ000000
 	andi $t1, $v0, 0xFF00	# $t1 <- 0x0000YY00
 	sll  $t1, $t1, 0x8		# $t1 <- 0x00YY0000

@@ -9,5 +9,5 @@ before_install:
     - sudo apt-get install spim
 script: 
     - python ./travis/spim-grader.py
-    - bash ./travis/update.sh
+    # - bash ./travis/update.sh
     - python ./travis/spim-grader.py -g
