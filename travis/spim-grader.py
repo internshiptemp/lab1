@@ -114,11 +114,16 @@ def input_lines(test, subm, resl, diag):
         update_results(output_file, passed)
 
 def passed_all():
-    path = "./diagnostics/"
+    path = "./travis/diagnostics/"
     files = os.listdir(path)
+    files.remove(".empty")
+    print files
+
     for f in files:
-        f = open(f, "r")
-        passed = bool(f.readlines[0])
+        f = open("{}{}".format(path, f), "r")
+        lines = f.readlines()
+        print lines[0]
+        passed = bool(lines[0])
         if not passed:
             return False
     return True
