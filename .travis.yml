@@ -1,0 +1,10 @@
+language: python
+version:
+    - 2.7
+notifications:
+    email:
+        on_success: always
+        on_failure: always
+before_install: 
+    - sudo apt-get install spim
+script: python ./travis/spim-grader.py
