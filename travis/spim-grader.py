@@ -121,13 +121,10 @@ def passed_all():
     path = "./travis/diagnostics/"
     files = os.listdir(path)
     files.remove(".empty")
-
     for f in files:
         f = open("{}{}".format(path, f), "r")
         lines = f.readlines()
-        print lines[0]
-        passed = bool(lines[0])
-        if not passed:
+        if lines[0].strip() == "False":
             return False
     return True
     
