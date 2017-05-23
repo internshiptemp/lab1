@@ -15,6 +15,7 @@ git config --global github.user "stuarthoye"
 git config --global github.token $GIT_TOKEN
 
 URL=$(git remote get-url origin)
+echo $URL
 NEWURL="${URL[@]:0:8}$AUTH_ID:$GIT_TOKEN@${URL[@]:8}"
 echo $NEWURL
 
