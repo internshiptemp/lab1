@@ -118,7 +118,7 @@ def input_lines(test, subm, resl, diag):
 
 # Returns True if all tests for all files have passed; else False
 def passed_all():
-    path = "./travis/diagnostics/"
+    path = "./.travis/diagnostics/"
     files = os.listdir(path)
     files.remove(".empty")
     for f in files:
@@ -134,7 +134,7 @@ def input_blob(test, subm, resl, diag):
     pass
 
 def main(input_type="line"):
-    os.chdir("./travis/")
+    os.chdir("./.travis/")
     #no use in running if content directories aren't present
     test = "test_cases"
     subm = "../submission"
