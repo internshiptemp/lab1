@@ -4,7 +4,7 @@
 #       then we can use the push to notify students of their
 #       test-case status.
 
-ech $GIT_TOKEN
+echo $GIT_TOKEN
 
 git config --global user.email "stuarthoye@gmail.com"
 git config --global user.name "stuarthoye"
