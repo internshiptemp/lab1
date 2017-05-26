@@ -127,8 +127,16 @@ def passed_all():
         if lines[0].strip() == "False":
             return False
     return True
-    
-# Austen intends to grade labs with a binary blob file
+
+def print_diagnostics():
+    path = "./.travis/diagnostics/"
+    files = os.listdir(path)
+    for f in files:
+        f = open("{}{}".format(path, f), "r")
+        print f.read()
+        f.close()
+
+# Austin intends to grade labs with a binary blob file
 # TODO: Get that working.
 def input_blob(test, subm, resl, diag):
     pass
@@ -148,6 +156,7 @@ def main(input_type="line"):
         input_lines(test, subm, resl, diag)
     else:
         input_blob(test, subm, resl, diag)
+    print diagnostics
 
        
 if __name__ == "__main__":
