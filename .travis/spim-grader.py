@@ -124,12 +124,13 @@ def passed_all():
     for f in files:
         f = open("{}{}".format(path, f), "r")
         lines = f.readlines()
+        f.close()
         if lines[0].strip() == "False":
             return False
     return True
 
 def print_diagnostics():
-    path = "./.travis/diagnostics/"
+    path = "./diagnostics/"
     files = os.listdir(path)
     for f in files:
         f = open("{}{}".format(path, f), "r")
@@ -156,7 +157,7 @@ def main(input_type="line"):
         input_lines(test, subm, resl, diag)
     else:
         input_blob(test, subm, resl, diag)
-    print diagnostics
+    print_diagnostics()
 
        
 if __name__ == "__main__":
