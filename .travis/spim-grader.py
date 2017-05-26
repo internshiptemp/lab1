@@ -133,6 +133,7 @@ def print_diagnostics():
     path = "./diagnostics/"
     files = os.listdir(path)
     for f in files:
+        print "{}".format(f)
         f = open("{}{}".format(path, f), "r")
         print f.read()
         f.close()
