@@ -156,7 +156,7 @@ def main(input_type="line"):
         input_lines(test, subm, resl, diag)
     else:
         input_blob(test, subm, resl, diag)
-    print diagnostics
+    print_diagnostics()
 
        
 if __name__ == "__main__":
