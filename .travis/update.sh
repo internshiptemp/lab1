@@ -9,7 +9,7 @@ git config -l
 git config --global user.email "stuarthoye@gmail.com"
 git config --global user.name "stuarthoye"
 git config --global github.user "stuarthoye"
-git config --global github.token $GIT_TOKEN
+git config --global github.password $GIT_TOKEN
 
 git config -l
 
