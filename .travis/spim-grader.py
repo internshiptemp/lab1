@@ -99,6 +99,7 @@ def input_lines(test, subm, resl, diag):
     # ASSUMPTION: THE FILE THAT WILL BE USED TO GRADE SOME SUBMISSION
     #             WILL SHARE NAMES WITH THE SUBMISSION FILE.
     for submission in os.listdir(subm):
+        print submission
         #cycle through samples to test:
         output_file = ""
         cases_f = submission[:submission.rfind(".")]
