@@ -15,4 +15,4 @@ git commit -m "Responding with test case results."
 git config --global push.default matching
 git push
 
-git config remote.origin.url $URL
+# git config remote.origin.url $URL
