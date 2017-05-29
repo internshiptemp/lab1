@@ -16,6 +16,13 @@ git config -l
 git add ./.travis/diagnostics/
 git commit -m "Responding with test case results."
 git config --global push.default matching
-git push origin master
+
+# https://gist.github.com/mintindeed/4600385
+# https://stackoverflow.com/questions/1335815/how-to-slice-an-array-in-bash
+UNAME="stuarthoye"
+PWORD=$GIT_TOKEN
+URL=$(git remote get-url --push origin)
+AUTH_URL="https://$UNAME:$PWORD@${URL[@]:8}"
+git push $AUTH_URL
 
 # git config remote.origin.url $URL
