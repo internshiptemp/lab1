@@ -9,11 +9,11 @@ def main():
     repo = Repo("./")
     print repo.heads.master
     # print repo.update_environment()
-    shutil.move("./.travis/diagnostics/output", "./output.txt")
+    shutil.copy("./.travis/diagnostics/output", "./output.txt")
     assert(os.path.isfile("./output.txt"))
     repo.git.add("output.txt")
-    repo.index.commit("Committing diagnostic feedback.")
-    repo.push("origin")
+    repo.git.commit("Committing diagnostic feedback.")
+    repo.git.push("origin")
 
 if __name__ == "__main__":
     main()
