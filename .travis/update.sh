@@ -4,26 +4,23 @@
 #       then we can use the push to notify students of their
 #       test-case status.
 
-git config -l
+# How to stop Travis building and entering into an endless loop.
+# https://coderwall.com/p/f7fusq/how-to-skip-making-a-build-in-travis-ci
 
-# git config --global user.email "stuarthoye@gmail.com"
-# git config --global user.name "stuarthoye"
-# git config --global github.user "stuarthoye"
-# git config --global github.password $GIT_TOKEN
+# UNAME & PWORD are set within Travis as environment variables
+echo $UNAME
+echo $PWORD
+URL=$(git config remote.origin.url)
+AUTH_URL="https://$UNAME:$PWORD@${URL[@]:8}"
 
-# git config -l
-
-# git add ./.travis/diagnostics/
-# git commit -m "Responding with test case results."
-# git config --global push.default matching
+cp ./.travis/diagnostics/output ./output
+git add ./output
+git commit -m "Responding with test case results. [ci skip]"
 
 # https://gist.github.com/mintindeed/4600385
 # https://stackoverflow.com/questions/1335815/how-to-slice-an-array-in-bash
-# UNAME="stuarthoye"
-# PWORD=$GIT_TOKEN
-# URL=$(git remote get-url --push origin)
-# AUTH_URL="https://$UNAME:$PWORD@${URL[@]:8}"
-# git push $AUTH_URL
+echo $AUTH_URL
+git push $AUTH_URL
 
 # git config remote.origin.url $URL
 
