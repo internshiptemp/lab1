@@ -9,7 +9,7 @@ before_install:
     - sudo apt-get install spim
     - pip install gitpython
 script: 
-    - python ./.travis/spim-grader.py        # Run the grader
+    - python ./.travis/student_grader.py        # Run the grader
     - bash ./.travis/update.sh             # Push the results to repo
     - python submit.py                              # New attempt to get feedback to students.
-    - python ./.travis/spim-grader.py -g     # Fail the build if cases don't pass
+    - python ./.travis/student_grader.py -g     # Fail the build if cases don't pass
