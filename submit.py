@@ -8,7 +8,7 @@ def main():
     
     repo = Repo("./")
     print repo.heads.master
-    print repo.update_environment()
+    # print repo.update_environment()
     shutil.move("./.travis/diagnostics/output", "./output")
     repo.index.add("./output")
     repo.index.commit("Committing diagnostic feedback.")
