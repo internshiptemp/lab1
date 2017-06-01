@@ -84,12 +84,12 @@ def generate_filename(submission, sample):
 
 # Heads the results file with a line saying whether the tests for that file passed
 def update_results(output_file, passed):
-    path = "./diagnostics/{}".format(output_file)
+    path = "./diagnostics/output"
     f = open(path, "r")
     results = f.read()
     f.close()
     f = open(path, "w")
-    f.write("{}{}".format(passed.__str__(), "\n"))
+    f.write("{}{}".format(str(passed), "\n"))
     f.write(results)
     f.close()
 
