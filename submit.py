@@ -12,7 +12,7 @@ def main():
     shutil.copy("./.travis/diagnostics/output", "./output.txt")
     assert(os.path.isfile("./output.txt"))
     repo.git.add("output.txt")
-    repo.git.commit("Committing diagnostic feedback.")
+    repo.git.commit(m="Committing diagnostic feedback.")
     repo.git.push("origin")
 
 if __name__ == "__main__":
