@@ -10,8 +10,6 @@
 # https://gist.github.com/mintindeed/4600385
 # https://stackoverflow.com/questions/1335815/how-to-slice-an-array-in-bash
 
-UNAME="stuarthoye"
-PWORD="80a50313f043efa0d83982c0293545ed3119727b"
 
 # UNAME & PWORD are set within Travis as environment variables
 # UNAME & PWORD are used to authenticate with github in order to permit a push
@@ -26,12 +24,14 @@ AUTH_URL="https://$UNAME:$PWORD@${URL[@]:8}"
 
 echo $AUTH_URL
 
-git config --global push.default simple
+git config user.name "Stuart Hoye (Travis CI response)"
+
+git config push.default simple
 
 cp ./.travis/diagnostics/output ./output
 cat ./output
 git add ./output
 git commit -m "Responding with test case results. [ci skip]"
-git push $AUTH_URL
+git push $AUTH_URL HEAD:$URL
 
 
