@@ -11,7 +11,7 @@ def main():
     # print repo.update_environment()
     shutil.move("./.travis/diagnostics/output", "./output.txt")
     assert(os.path.isfile("./output.txt"))
-    repo.index.add("output.txt")
+    repo.git.add("output.txt")
     repo.index.commit("Committing diagnostic feedback.")
     repo.push("origin")
 
