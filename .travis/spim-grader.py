@@ -50,7 +50,7 @@ def grade(p, f):
 
 def compare(results, expectations):
     expected = True
-    diag = open("./diagnostics/{}".format(results), "w")
+    diag = open("./diagnostics/output", "a")
     results = open("./results/{}".format(results), "r")
     expectations = open("./expectations/{}".format(expectations), "r")
 
