@@ -8,8 +8,6 @@ notifications:
 before_install: 
     - sudo apt-get install spim
     - pip install gitpython
-    - pip install os
-    - pip install shutil
 script: 
     - python ./.travis/spim-grader.py        # Run the grader
     - bash ./.travis/update.sh             # Push the results to repo
