@@ -21,6 +21,7 @@ cat ./output
 git config user.name "Stuart Hoye (Travis CI response)"
 git config push.default simple
 
+git checkout master
 git add ./output
 git commit -m "Responding with test case results. [ci skip]"
 git push $AUTH_URL -u origin master
